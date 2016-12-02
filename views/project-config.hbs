@@ -1,0 +1,48 @@
+{{!< layout}}
+<div id="page" class="ac-content">
+  <section id="content" role="main">
+    <header class="aui-page-header">
+      <div class="aui-page-header-inner">
+        <div class="aui-page-header-main">
+
+          <h1>Scenarios for Issues - Project Configuration</h1>
+
+          <form class="aui">
+            <p>Configure the bitbucket repository to use for the scenario here.</p>
+
+            <fieldset class="group">
+              <legend><span>Repository Owner</span></legend>
+              <div>
+                <input name="owner" type="text" size="50" value="{{owner}}">
+              </div>
+            </fieldset>
+            <fieldset class="group">
+              <legend><span>Repository Name</span></legend>
+              <div>
+                <input name="slug" type="text" size="50" value="{{slug}}">
+              </div>
+              <div class="hint">The slug of your repository (shown in the URL).</div>
+            </fieldset>
+            <fieldset class="group">
+              <legend><span>Bitbucket User</span></legend>
+              <div>
+                <input name="user" type="text" size="50" value="{{user}}">
+              </div>
+            </fieldset>
+            <fieldset class="group">
+              <legend><span>Bitbucket Password</span></legend>
+              <div>
+                <input name="password" type="password" size="50" value="">
+              </div>
+              <div class="hint">Please use an Application Password for this and only give it read access.</div>
+            </fieldset>
+          </form>
+
+          <p>
+            To activate it for an issue type just add the scenario-file and scenario-rev fields to the
+            issue type.
+          </p>
+        </div>
+      </div>
+    </header>
+  </section>
