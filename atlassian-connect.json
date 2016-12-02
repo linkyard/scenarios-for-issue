@@ -29,7 +29,38 @@
         "location": "atl.jira.view.issue.left.context",
         "weight": 500,
         "key": "ly-hello-world",
-        "url": "/scenarios"
+        "url": "/scenarios?project={project.key}&issue={issue.key}",
+        "conditions": [
+          {
+            "condition": "entity_property_exists",
+            "params": {
+              "entity": "issue",
+              "propertyKey": "ly-scenario-set"
+            }
+          }
+        ]
+      }
+    ],
+    "jiraIssueFields": [
+      {
+        "name": {
+          "value": "Scenario file"
+        },
+        "description": {
+          "value": "Scenario (.feature file) location in the source repository relative to the root of the repo."
+        },
+        "type": "string",
+        "key": "scenario-file-field"
+      },
+      {
+        "name": {
+          "value": "Scenario revision"
+        },
+        "description": {
+          "value": "Revision of the Scenario (.feature file)."
+        },
+        "type": "string",
+        "key": "scenario-rev-field"
       }
     ]
   }

@@ -16,14 +16,6 @@ module.exports = function (app, addon) {
     });
   });
 
-
-  app.get("/scenarios", addon.authenticate(), function (req, res) {
-    res.render('scenarios', {
-      content: "Test it for " + req.query['issueId']
-    });
-  });
-
-
   // load any additional files you have in routes and apply those to the app
   {
     var fs = require('fs');
