@@ -18,7 +18,8 @@
     "installed": "/installed"
   },
   "scopes": [
-    "READ"
+    "read",
+    "write"
   ],
   "modules": {
     "webPanels": [
@@ -32,10 +33,11 @@
         "url": "/scenarios?project={project.key}&issue={issue.key}",
         "conditions": [
           {
-            "condition": "entity_property_exists",
+            "condition": "entity_property_equal_to",
             "params": {
               "entity": "issue",
-              "propertyKey": "ly-scenario-set"
+              "propertyKey": "ly-scenario-visible",
+              "value": "true"
             }
           }
         ]
@@ -61,6 +63,12 @@
         },
         "type": "string",
         "key": "scenario-rev-field"
+      }
+    ],
+    "webhooks": [
+      {
+        "event": "jira:issue_updated",
+        "url": "/issue-updated"
       }
     ]
   }
