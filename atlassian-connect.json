@@ -1,0 +1,36 @@
+{
+  "key": "ly-scenarios",
+  "name": "Scenarios for User Story",
+  "description": "Shows the scenarios for the user story on the view issue page.",
+  "vendor": {
+    "name": "linkyard",
+    "url": "http://linkyard.ch"
+  },
+  "baseUrl": "{{localBaseUrl}}",
+  "links": {
+    "self": "{{localBaseUrl}}/atlassian-connect.json",
+    "homepage": "{{localBaseUrl}}/atlassian-connect.json"
+  },
+  "authentication": {
+    "type": "jwt"
+  },
+  "lifecycle": {
+    "installed": "/installed"
+  },
+  "scopes": [
+    "READ"
+  ],
+  "modules": {
+    "webPanels": [
+      {
+        "name": {
+          "value": "Scenarios"
+        },
+        "location": "atl.jira.view.issue.left.context",
+        "weight": 500,
+        "key": "ly-hello-world",
+        "url": "/scenarios"
+      }
+    ]
+  }
+}
