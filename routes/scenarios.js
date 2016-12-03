@@ -36,7 +36,7 @@ module.exports = function (app, addon) {
         }, function (err) {
           console.info(err);
           res.render('scenarios-error', {
-            message: 'Could not load source for ' + issue.file + ' (rev ' + rev + ' from bitbucket.',
+            message: 'Could not load source for ' + issue.file + ' (rev ' + rev + ') from bitbucket.',
             details: err.toString()
           });
         });
