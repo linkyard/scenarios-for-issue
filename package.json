@@ -17,6 +17,7 @@
     "express": "^4.13.3",
     "express-hbs": "*",
     "highlight.js": "^9.8.0",
+    "jugglingdb-postgres": "^0.1.0",
     "jugglingdb-sqlite3": "0.0.5",
     "morgan": "^1.6.1",
     "static-expiry": ">=0.0.5"
