@@ -1,5 +1,5 @@
 {
-  "key": "ly-scenarios",
+  "key": "ch.linkyard.scenarios-jira",
   "name": "Scenarios for User Story",
   "description": "Shows the scenarios for the user story on the view issue page.",
   "vendor": {
