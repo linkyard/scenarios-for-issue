@@ -29,7 +29,7 @@
         },
         "location": "atl.jira.view.issue.left.context",
         "weight": 500,
-        "key": "ly-hello-world",
+        "key": "ly-issue-scenarios",
         "url": "/scenarios?project={project.key}&issue={issue.key}",
         "conditions": [
           {
@@ -41,6 +41,17 @@
             }
           }
         ]
+      }
+    ],
+    "jiraProjectAdminTabPanels": [
+      {
+        "location": "projectgroup2",
+        "url": "/project-config?project={project.key}",
+        "weight": 100,
+        "name": {
+          "value": "Scenarios Integration"
+        },
+        "key": "projectconfig-panel"
       }
     ],
     "jiraIssueFields": [

@@ -1,0 +1,65 @@
+{{!< layout}}
+<div id="page" class="ac-content">
+  <section id="content" role="main">
+    <header class="aui-page-header">
+      <div class="aui-page-header-inner">
+        <div class="aui-page-header-main">
+
+          <h1>Scenarios for Issues - Project Configuration</h1>
+
+          <form action="#" method="post" class="aui" style="display: none" id="form">
+            <p>Please configure the Bitbucket repository that contains scenarios (.feature files).</p>
+            <p>
+              To activate it for an issue type just add the scenario-file and scenario-rev fields to the
+              issue type.
+            </p>
+            <div class="field-group">
+              <label for="owner">Repository Owner
+                <span class="aui-icon icon-required">(required)</span></label>
+              <div>
+                <input id="owner" class="text medium-field" name="owner" type="text"
+                       value="{{owner}}">
+              </div>
+            </div>
+            <div class="field-group">
+              <label for="slug">Repository Name
+                <span class="aui-icon icon-required">(required)</span></label>
+              <div>
+                <input id="slug" class="text medium-field" name="slug" type="text"
+                       value="{{slug}}">
+              </div>
+              <div class="description">The slug of your repository (shown in the URL).</div>
+            </div>
+            <div class="field-group">
+              <label for="user">Bitbucket User
+                <span class="aui-icon icon-required">(required)</span></label>
+              <div>
+                <input id="user" class="text medium-field" name="slug" type="text"
+                       value="{{user}}">
+              </div>
+            </div>
+            <div class="field-group">
+              <label for="password">Password
+                <span class="aui-icon icon-required">(required)</span></label>
+              <div>
+                <input id="password" class="text medium-field" name="slug" type="password"
+                       value="{{password}}">
+              </div>
+              <div class="description">Please use an Application Password for this and only give it read access.</div>
+            </div>
+
+            <div class="buttons-container">
+              <div class="buttons">
+                <input id="update" type="submit" value="Update">
+              </div>
+            </div>
+          </form>
+          <div id="loading">
+            Loading current settings...
+          </div>
+        </div>
+      </div>
+    </header>
+  </section>
+</div>
+<script>require(['js/project-config.js']);</script>
