@@ -7,42 +7,61 @@
 
           <h1>Scenarios for Issues - Project Configuration</h1>
 
-          <form class="aui">
-            <p>Configure the bitbucket repository to use for the scenario here.</p>
+          <a href="/project-config-updated?jwt={{token}}">See more</a>
 
-            <fieldset class="group">
-              <legend><span>Repository Owner</span></legend>
+          <form action="#" method="post" class="aui" style="display: none" id="form">
+            <p>Please configure the Bitbucket repository that contains scenarios (.feature files).</p>
+            <p>
+              To activate it for an issue type just add the scenario-file and scenario-rev fields to the
+              issue type.
+            </p>
+            <div class="field-group">
+              <label for="owner">Repository Owner
+                <span class="aui-icon icon-required">(required)</span></label>
               <div>
-                <input name="owner" type="text" size="50" value="{{owner}}">
+                <input id="owner" class="text medium-field" name="owner" type="text"
+                       value="{{owner}}">
               </div>
-            </fieldset>
-            <fieldset class="group">
-              <legend><span>Repository Name</span></legend>
+            </div>
+            <div class="field-group">
+              <label for="slug">Repository Name
+                <span class="aui-icon icon-required">(required)</span></label>
               <div>
-                <input name="slug" type="text" size="50" value="{{slug}}">
+                <input id="slug" class="text medium-field" name="slug" type="text"
+                       value="{{slug}}">
               </div>
-              <div class="hint">The slug of your repository (shown in the URL).</div>
-            </fieldset>
-            <fieldset class="group">
-              <legend><span>Bitbucket User</span></legend>
+              <div class="description">The slug of your repository (shown in the URL).</div>
+            </div>
+            <div class="field-group">
+              <label for="user">Bitbucket User
+                <span class="aui-icon icon-required">(required)</span></label>
               <div>
-                <input name="user" type="text" size="50" value="{{user}}">
+                <input id="user" class="text medium-field" name="slug" type="text"
+                       value="{{user}}">
               </div>
-            </fieldset>
-            <fieldset class="group">
-              <legend><span>Bitbucket Password</span></legend>
+            </div>
+            <div class="field-group">
+              <label for="password">Password
+                <span class="aui-icon icon-required">(required)</span></label>
               <div>
-                <input name="password" type="password" size="50" value="">
+                <input id="password" class="text medium-field" name="slug" type="password"
+                       value="{{password}}">
               </div>
-              <div class="hint">Please use an Application Password for this and only give it read access.</div>
-            </fieldset>
+              <div class="description">Please use an Application Password for this and only give it read access.</div>
+            </div>
+
+            <div class="buttons-container">
+              <div class="buttons">
+                <input id="update" type="submit" value="Update">
+              </div>
+            </div>
           </form>
-
-          <p>
-            To activate it for an issue type just add the scenario-file and scenario-rev fields to the
-            issue type.
-          </p>
+          <div id="loading">
+            Loading current settings...
+          </div>
         </div>
       </div>
     </header>
   </section>
+</div>
+<script>require(['js/project-config.js']);</script>
