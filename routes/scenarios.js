@@ -1,21 +1,22 @@
+const Promise = require('bluebird');
+
 module.exports = function (app, addon) {
+  const jira = require('../lib/jira-connector')(addon);
+  const bc = require('./../lib/bitbucket-connector');
+
   app.get("/scenarios", addon.authenticate(), function (req, res) {
-    const jira = require('../lib/jira-connector')(addon);
-    const bc = require('./../lib/bitbucket-connector');
-
-    //TODO from settings
-    const creds = {
-      username: 'mariosiegenthaler',
-      password: 'LD25tSm5Nky5RStsWLeV'
-    };
-    const bitbucket = bc('linkyard', 'dynamic-processes', creds);
-
-    jira.getIssueInfo(req, req.query['issue'])
-      .then(function (issue) {
+    Promise.join(
+      jira.loadSettings(req, req.query.project),
+      jira.getIssueInfo(req, req.query.issue),
+      function (settings, issue) {
+        const rev = issue.rev || 'master';
         if (!issue.file)
           return res.render('no-scenario');
 
-        const rev = issue.rev || 'master';
+        const bitbucket = bc('linkyard', 'dynamic-processes', {
+          username: settings.user,
+          password: settings.password
+        });
         bitbucket.getFile(issue.file, rev).then(function (data) {
           res.render('scenarios', {
             name: data.file,
