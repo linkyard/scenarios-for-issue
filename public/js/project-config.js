@@ -1,7 +1,5 @@
 define(['./page-context'], function (PC) {
-  'using strict'
-
-  const defaultPasswordValue = '__existing_password__'
+  const defaultPasswordValue = '__existing_password__';
 
 
   function getProjectProperty(projectKey, propertyKey) {
@@ -28,7 +26,7 @@ define(['./page-context'], function (PC) {
           type: 'PUT',
           contentType: 'application/json',
           data: JSON.stringify(propertyValue),
-          success: function (data) {
+          success: function () {
             self.resolve();
           }, error: function () {
             self.reject();
@@ -38,20 +36,45 @@ define(['./page-context'], function (PC) {
     });
   }
 
-  var pageContext = PC.load();
-  var projectKey = pageContext.project;
-
-  function loadProperty(name) {
-    return getProjectProperty(projectKey, name).then(null, function () {
-      return $.Deferred().resolve({key: name, value: ''});
-    })
+  function setProjectEntityPropertyEncrypted(projectKey, propertyKey, propertyValue) {
+    //encrypt the password first
+    return AJS.$.ajax({
+      type: 'POST',
+      contentType: 'application/json',
+      url: 'encrypt',
+      data: JSON.stringify({
+        value: propertyValue
+      }),
+      beforeSend: function (request) {
+        request.setRequestHeader('Authorization', 'JWT ' + pageContext.jwt);
+      }
+    }).then(function (encrypted) {
+      return setProjectEntityProperty(projectKey, propertyKey, encrypted);
+    });
   }
 
-  function loadSettings() {
+  function notifyConfigUpdated(projectKey) {
+    return AJS.$.ajax({
+      type: 'GET',
+      dataType: 'json',
+      url: 'project-config-updated?project=' + projectKey,
+      beforeSend: function (request) {
+        request.setRequestHeader('Authorization', 'JWT ' + pageContext.jwt);
+      }
+    });
+  }
+
+  function loadSettings(projectKey) {
+    function loadProperty(name) {
+      return getProjectProperty(projectKey, name).then(null, function () {
+        return $.Deferred().resolve({key: name, value: ''});
+      })
+    }
+
     var properties = [
       loadProperty('ly-scenarios-repo-owner'),
       loadProperty('ly-scenarios-repo-slug'),
-      loadProperty('ly-scenarios-bitbucket-user')]
+      loadProperty('ly-scenarios-bitbucket-user')];
     return AJS.$.when
       .apply(AJS.$, properties)
       .then(function (owner, slug, user) {
@@ -65,7 +88,11 @@ define(['./page-context'], function (PC) {
       });
   }
 
-  loadSettings();
+
+  var pageContext = PC.load();
+  var projectKey = pageContext.project;
+
+  loadSettings(projectKey);
 
   AJS.$('#update').click(function (e) {
     e.preventDefault();
@@ -90,34 +117,13 @@ define(['./page-context'], function (PC) {
       setProjectEntityProperty(projectKey, 'ly-scenarios-repo-slug', slug),
       setProjectEntityProperty(projectKey, 'ly-scenarios-bitbucket-user', user)];
     if (password != defaultPasswordValue) {
-      toUpdate.push(
-        //encrypt the password first
-        AJS.$.ajax({
-          type: 'POST',
-          contentType: 'application/json',
-          url: 'encrypt',
-          data: JSON.stringify({
-            value: password
-          }),
-          beforeSend: function (request) {
-            request.setRequestHeader('Authorization', 'JWT ' + pageContext.jwt);
-          }
-        }).then(function (encrypted) {
-          return setProjectEntityProperty(projectKey, 'ly-scenarios-bitbucket-password', encrypted);
-        })
-      );
+      toUpdate.push(setProjectEntityPropertyEncrypted(projectKey,
+        'ly-scenarios-bitbucket-password', password));
     }
     AJS.$.when.apply(AJS.$, toUpdate)
       .then(function () {
         //notify the backend that the configuration has changed
-        AJS.$.ajax({
-          type: 'GET',
-          dataType: 'json',
-          url: 'project-config-updated?project=' + projectKey,
-          beforeSend: function (request) {
-            request.setRequestHeader('Authorization', 'JWT ' + pageContext.jwt);
-          }
-        });
+        notifyConfigUpdated(projectKey);
 
         AP.require('messages', function (messages) {
             messages.success('Settings Updated', 'Your settings were saved.', {
