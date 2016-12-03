@@ -90,8 +90,22 @@ define(['./page-context'], function (PC) {
       setProjectEntityProperty(projectKey, 'ly-scenarios-repo-slug', slug),
       setProjectEntityProperty(projectKey, 'ly-scenarios-bitbucket-user', user)];
     if (password != defaultPasswordValue) {
-      //TODO encrypt the password?
-      toUpdate.push(setProjectEntityProperty(projectKey, 'ly-scenarios-bitbucket-password', password));
+      toUpdate.push(
+        //encrypt the password first
+        AJS.$.ajax({
+          type: 'POST',
+          contentType: 'application/json',
+          url: 'encrypt',
+          data: JSON.stringify({
+            value: password
+          }),
+          beforeSend: function (request) {
+            request.setRequestHeader('Authorization', 'JWT ' + pageContext.jwt);
+          }
+        }).then(function (encrypted) {
+          return setProjectEntityProperty(projectKey, 'ly-scenarios-bitbucket-password', encrypted);
+        })
+      );
     }
     AJS.$.when.apply(AJS.$, toUpdate)
       .then(function () {

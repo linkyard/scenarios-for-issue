@@ -12,6 +12,7 @@
     "body-parser": "^1.14.2",
     "compression": "^1.6.0",
     "cookie-parser": "^1.4.0",
+    "crypt": "0.0.1",
     "errorhandler": "^1.4.2",
     "express": "^4.13.3",
     "express-hbs": "*",
