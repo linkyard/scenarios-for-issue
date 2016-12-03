@@ -5,14 +5,21 @@ module.exports = function (app, addon) {
   const bc = require('./../lib/bitbucket-connector');
 
   app.get("/scenarios", addon.authenticate(), function (req, res) {
-    Promise.join(
+    Promise.all([
       jira.loadSettings(req, req.query.project),
-      jira.getIssueInfo(req, req.query.issue),
-      function (settings, issue) {
+      jira.getIssueInfo(req, req.query.issue)])
+      .then(function (a) {
+        settings = a[0];
+        issue = a[1];
         const rev = issue.rev || 'master';
         if (!issue.file)
           return res.render('no-scenario');
 
+        if (!settings.user) {
+          return res.render('scenarios-error', {
+            message: "Please configure the plugin first (in the project settings under 'Scenario Integration').",
+          });
+        }
         const bitbucket = bc('linkyard', 'dynamic-processes', {
           username: settings.user,
           password: settings.password
@@ -28,11 +35,16 @@ module.exports = function (app, addon) {
           });
         }, function (err) {
           console.info(err);
-          res.render('scenarios-not-found', {
-            message: err,
-            name: issue.file,
-            rev: rev
+          res.render('scenarios-error', {
+            message: 'Could not load source for ' + issue.file + ' (rev ' + rev + ' from bitbucket.',
+            details: err.toString()
           });
+        });
+      }, function (err) {
+        console.info(err);
+        res.render('scenarios-error', {
+          message: 'Could not get data from JIRA.',
+          details: err.toString()
         });
       });
   });
