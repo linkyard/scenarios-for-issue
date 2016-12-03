@@ -43,29 +43,15 @@
         ]
       }
     ],
-    "webItems": [
+    "jiraProjectAdminTabPanels": [
       {
-        "key": "ly-scenarios-config",
+        "location": "projectgroup2",
+        "url": "/project-config?project={project.key}",
+        "weight": 100,
         "name": {
           "value": "Scenarios Integration"
         },
-        "url": "ly-scenarios-project-configuration",
-        "location": "atl.jira.proj.config/projectgroup2",
-        "weight": 900,
-        "tooltip": {
-          "value": "Settings for the issue scenario configuration"
-        },
-        "context": "page"
-      }
-    ],
-    "generalPages": [
-      {
-        "key": "ly-scenarios-project-configuration",
-        "name": {
-          "value": "Scenarios for Issues - Project Configuration"
-        },
-        "url": "/project-config?project={project.key}",
-        "location": "not-a-valid-location"
+        "key": "projectconfig-panel"
       }
     ],
     "jiraIssueFields": [
