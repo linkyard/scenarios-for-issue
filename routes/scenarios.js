@@ -31,7 +31,8 @@ module.exports = function (app, addon) {
             shortRev: rev.substr(0, 8),
             notFixedRev: rev.match(/^[0-9a-fA-F]{4,40}$/) == null,
             content: data.raw,
-            formatted: data.formatted
+            formatted: data.formatted,
+            link: 'https://bitbucket.org/' + settings.owner + '/' + settings.slug + '/src/' + rev + '/' + issue.file
           });
         }, function (err) {
           console.info(err);
