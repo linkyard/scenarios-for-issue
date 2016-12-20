@@ -20,7 +20,7 @@ module.exports = function (app, addon) {
             message: "Please configure the plugin first (in the project settings under 'Scenario Integration').",
           });
         }
-        const bitbucket = bc('linkyard', 'dynamic-processes', {
+        const bitbucket = bc(settings.owner, settings.slug, {
           username: settings.user,
           password: settings.password
         });
