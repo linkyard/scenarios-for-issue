@@ -20,7 +20,9 @@ have typed in the field).
 
 ## For Developers
 This addon may serve as an example for Atlassian Connect plugins.
+
 It uses the following techniques:
+
 * node.js express based server (atlassian-connect-express)
 * embedding a webpanel (`ly-issue-scenarios`) into the view issue screen: `atlassian-connect.json`
 * adding a settings screen (`projectconfig-panel`) to the project settings: `atlassian-connect.json`
