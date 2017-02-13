@@ -6,7 +6,7 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "atlassian-connect-express": "2.0.0",
+    "atlassian-connect-express": "2.0.2",
     "bitbucket-api": "^0.1.0",
     "bluebird": "^3.4.6",
     "body-parser": "^1.14.2",
