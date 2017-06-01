@@ -1,6 +1,9 @@
 define(['./page-context'], function (PC) {
   const defaultPasswordValue = '__existing_password__';
 
+  const BITBUCKET = 'bitbucket';
+  const GITHUB = 'github';
+
 
   function getProjectProperty(projectKey, propertyKey) {
     return $.Deferred(function (self) {
@@ -64,6 +67,16 @@ define(['./page-context'], function (PC) {
     });
   }
 
+  function parseRepoType(type) {
+    switch (type) {
+      case 'github':
+        return GITHUB;
+      case 'bitbucket':
+      default:
+        return BITBUCKET;
+    }
+  }
+
   function loadSettings(projectKey) {
     function loadProperty(name) {
       return getProjectProperty(projectKey, name).then(null, function () {
@@ -72,12 +85,16 @@ define(['./page-context'], function (PC) {
     }
 
     var properties = [
+      loadProperty('ly-scenarios-repo-type'),
       loadProperty('ly-scenarios-repo-owner'),
       loadProperty('ly-scenarios-repo-slug'),
       loadProperty('ly-scenarios-bitbucket-user')];
     return AJS.$.when
       .apply(AJS.$, properties)
-      .then(function (owner, slug, user) {
+      .then(function (type_, owner, slug, user) {
+        const type = parseRepoType(type_.value);
+        AJS.$('#github').attr('checked', type === GITHUB);
+        AJS.$('#bitbucket').attr('checked', type === BITBUCKET);
         AJS.$('#owner').val(owner.value);
         AJS.$('#slug').val(slug.value);
         AJS.$('#user').val(user.value);
@@ -97,10 +114,19 @@ define(['./page-context'], function (PC) {
   AJS.$('#update').click(function (e) {
     e.preventDefault();
 
-    var owner = AJS.$('#owner').val();
-    var slug = AJS.$('#slug').val();
-    var user = AJS.$('#user').val();
-    var password = AJS.$('#password').val();
+    function readType() {
+      if (AJS.$('#github').attr('checked')) {
+        return GITHUB;
+      } else {
+        return BITBUCKET;
+      }
+    }
+
+    const type = readType();
+    const owner = AJS.$('#owner').val();
+    const slug = AJS.$('#slug').val();
+    const user = AJS.$('#user').val();
+    const password = AJS.$('#password').val();
 
     if (!owner || !slug || !user || !password) {
       AP.require('messages', function (messages) {
@@ -113,10 +139,11 @@ define(['./page-context'], function (PC) {
     }
 
     const toUpdate = [
+      setProjectEntityProperty(projectKey, 'ly-scenarios-repo-type', type),
       setProjectEntityProperty(projectKey, 'ly-scenarios-repo-owner', owner),
       setProjectEntityProperty(projectKey, 'ly-scenarios-repo-slug', slug),
       setProjectEntityProperty(projectKey, 'ly-scenarios-bitbucket-user', user)];
-    if (password != defaultPasswordValue) {
+    if (password !== defaultPasswordValue) {
       toUpdate.push(setProjectEntityPropertyEncrypted(projectKey,
         'ly-scenarios-bitbucket-password', password));
     }

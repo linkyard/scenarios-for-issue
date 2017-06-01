@@ -8,13 +8,24 @@
           <h1>Scenarios for Issues - Project Configuration</h1>
 
           <form action="#" method="post" class="aui" style="display: none" id="form">
-            <p>Please configure the Bitbucket repository that contains scenarios (.feature files).</p>
+            <p>Please configure the source repository that contains scenarios (.feature files).</p>
             <p>
               To activate it for an issue type just add the scenario-file and scenario-rev fields to the
               issue type.
             </p>
+            <fieldset class="group">
+              <legend>Type</legend>
+              <div class="radio">
+                <input class="radio" type="radio" checked="checked" name="provider" id="bitbucket">
+                <label for="bitbucket">Bitbucket (Cloud)</label>
+              </div>
+              <div class="radio">
+                <input class="radio" type="radio" name="provider" id="github">
+                <label for="github">Github</label>
+              </div>
+            </fieldset>
             <div class="field-group">
-              <label for="owner">Repository Owner
+              <label for="owner">Repository Owner / Organization
                 <span class="aui-icon icon-required">(required)</span></label>
               <div>
                 <input id="owner" class="text medium-field" name="owner" type="text"
@@ -31,7 +42,7 @@
               <div class="description">The slug of your repository (shown in the URL).</div>
             </div>
             <div class="field-group">
-              <label for="user">Bitbucket User
+              <label for="user">User
                 <span class="aui-icon icon-required">(required)</span></label>
               <div>
                 <input id="user" class="text medium-field" name="slug" type="text"
@@ -39,13 +50,14 @@
               </div>
             </div>
             <div class="field-group">
-              <label for="password">Password
+              <label for="password">Application Password/Token
                 <span class="aui-icon icon-required">(required)</span></label>
               <div>
                 <input id="password" class="text medium-field" name="slug" type="password"
                        value="{{password}}">
               </div>
-              <div class="description">Please use an Application Password for this and only give it read access.</div>
+              <div class="description">Please use an Application Password (bitbucket) or Personal Access Token (github) for this and only give it read access.
+              </div>
             </div>
 
             <div class="buttons-container">
