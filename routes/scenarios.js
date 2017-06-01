@@ -32,7 +32,7 @@ module.exports = function (app, addon) {
             notFixedRev: rev.match(/^[0-9a-fA-F]{4,40}$/) == null,
             content: data.raw,
             formatted: data.formatted,
-            link: 'https://bitbucket.org/' + settings.owner + '/' + settings.slug + '/src/' + rev + '/' + issue.file
+            link: bitbucket.getUrl(issue.file, rev)
           });
         }, function (err) {
           console.info(err);
