@@ -44,3 +44,13 @@ It uses the following techniques:
   * the encrypted passwords are stored as entity properties in JIRA
   * they can only be decrypted by the server and not in the browser
 * deployment using docker: `Dockerfile`
+
+
+## Development
+To develop and test with this plugin on you local macheinge:
+
+* Sign-up for an [development cloud instance](https://developer.atlassian.com/static/connect/docs/latest/guides/development-setup.html)
+* Copy `credentials.json.sample` to `credentials.json` and add your credentials from the previous step
+* Start the server using `npm start`
+* It'll add the plugin to your developement JIRA instance. If it does not you can manually add it in the plugin manager
+  using the ngrok url shown at the startup (i.e. `Local tunnel established at https://fb33e879.ngrok.io/`)
