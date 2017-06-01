@@ -1,8 +1,14 @@
 const Promise = require('bluebird');
+const hljs = require('highlight.js');
 
 module.exports = function (app, addon) {
   const jira = require('../lib/jira-connector')(addon);
-  const bc = require('./../lib/bitbucket-connector');
+  const repoFactory = require('./../lib/repo');
+
+  function gherkinToHtml(gherkin) {
+    if (!gherkin) return;
+    return hljs.highlight('gherkin', gherkin).value;
+  }
 
   app.get("/scenarios", addon.authenticate(), function (req, res) {
     Promise.all([
@@ -20,19 +26,19 @@ module.exports = function (app, addon) {
             message: "Please configure the plugin first (in the project settings under 'Scenario Integration').",
           });
         }
-        const bitbucket = bc(settings.owner, settings.slug, {
+        const repo = repoFactory(settings.type, settings.owner, settings.slug, {
           username: settings.user,
           password: settings.password
         });
-        bitbucket.getFile(issue.file, rev).then(function (data) {
+        repo.getFile(issue.file, rev).then(function (data) {
           res.render('scenarios', {
             name: data.file,
             rev: rev,
             shortRev: rev.substr(0, 8),
             notFixedRev: rev.match(/^[0-9a-fA-F]{4,40}$/) == null,
             content: data.raw,
-            formatted: data.formatted,
-            link: bitbucket.getUrl(issue.file, rev)
+            formatted: gherkinToHtml(data.raw),
+            link: repo.getUrl(issue.file, rev)
           });
         }, function (err) {
           console.info(err);

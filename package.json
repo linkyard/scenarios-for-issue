@@ -16,6 +16,7 @@
     "errorhandler": "^1.4.2",
     "express": "^4.13.3",
     "express-hbs": "*",
+    "github": "^9.2.0",
     "highlight.js": "^9.8.0",
     "jugglingdb-postgres": "^0.1.0",
     "jugglingdb-sqlite3": "0.0.5",
