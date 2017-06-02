@@ -1,7 +1,34 @@
 # Scenarios for JIRA Cloud
 
-Extends Atlassian JIRA by including gherkin scenarios 
+Extends Atlassian JIRA Cloud by including gherkin scenarios
 from a github or bitbucket repository into the issue view.
+
+
+## Installation
+* Install from the [Atlassian Marketplace](https://marketplace.atlassian.com/plugins/ch.linkyard.scenarios-jira/cloud/overview)
+* Setup your project:
+  * Go to the administration of your project and open "scenarios integration".
+  * Enter the data of the source repositry your gherking (.feature) files are kept in.
+  * Make sure to use an application password (bitbucket) or personal security token for security reasons.
+  * ![Project Settings](doc/project-settings.png)
+* Enable the custom fields "scenario file" and "scenario revision" for your Story issue type (or whatever issue type you're using for the scenarios).
+  * If your not and experienced JIRA Administrator you can use the "Where is my field?" functionality of JIRA:
+  * Open the issue you want to display the scenario on.
+  * Click the "Admin" button in the toolbar and select "Where is my field?"
+  * Type "Scenario File"
+  * ![Where is my field](doc/where-is-my-field.png)
+  * The dialog will show you where you need to add the field to (refer to the Atlassian JIRA documentation for an explanation).
+  * Click "go to 'Task Management Edit/View Issue Screen' Screen configuration settings"
+  * Add the "Scenario file" and "Scenario revision" field to the screen
+  * ![Configure Screen](doc/configure-screen.png)
+
+## Usage
+* Edit an issue and fill the "Scenario file" and "Scenario revision":
+  * file: Relative filename of the your .feature file inside your source repository (eg `tests/features/my-feature.feature`)
+  * revision: git branch or commit id (sha). If you're not sure about it, then use `master` (usually the default branch in the repository)
+  * ![Edit Issue](doc/edit-isssue.png)
+* See your scenario inside your issue
+* ![View Scenario](doc/view-scenario.png)
 
 
 ## Security
