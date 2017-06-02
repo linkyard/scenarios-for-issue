@@ -1,20 +1,21 @@
 # Scenarios for JIRA Cloud
 
 Extends Atlassian JIRA by including gherkin scenarios 
-from a bitbucket repository into the issue view.
+from a github or bitbucket repository into the issue view.
+
 
 ## Security
 * this addon reads issue details from Jira
 * this addon stores entity properties on the issue:
   * a flag whether the scenario fields are set
 * this addon stores entity properties on the project:
-  * bitbucket repository identification (owner, name/slug)
-  * bitbucket account (user/password). The password is encrypted
+  * bitbucket/github repository identification (type, owner, name/slug)
+  * bitbucket/github account (user/password). The password is encrypted
     with a key that is stored in the database of the addon.
 
 The JIRA instance never has access to your bitbucket app
-password. The same goes for the client (browser) - except
-when they configure a new password (only the one they
+password or github token. The same goes for the client (browser) -
+except when they configure a new password (only the one they
 have typed in the field).
 
 
@@ -30,7 +31,7 @@ It uses the following techniques:
 * adding custom fields to the JIRA instance: `atlassian-connect.json`
 * using the JIRA REST API from our server: `jira-connector.js`
 * using the JIRA REST API from the webbrowser: `getProjectProperty` in `js/project-config.js`
-* using the bitbucket REST API from the server: `bitbucket-connector.js`
+* using the bitbucket REST API from the server: `bitbucket-connector.js` / github REST API `github-connector.js`
 * calling our server from the browser
   * server part: `encrypt` in `routes/project-config.js`
   * client part:
