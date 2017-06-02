@@ -20,13 +20,13 @@ from a github or bitbucket repository into the issue view.
   * The dialog will show you where you need to add the field to (refer to the Atlassian JIRA documentation for an explanation).
   * Click "go to 'Task Management Edit/View Issue Screen' Screen configuration settings"
   * Add the "Scenario file" and "Scenario revision" field to the screen
-  * ![Configure Screen](doc/configure-screen.png)
+    ![Configure Screen](doc/configure-screen.png)
 
 ## Usage
 * Edit an issue and fill the "Scenario file" and "Scenario revision":
   * file: Relative filename of the your .feature file inside your source repository (eg `tests/features/my-feature.feature`)
   * revision: git branch or commit id (sha). If you're not sure about it, then use `master` (usually the default branch in the repository)
-  * ![Edit Issue](doc/edit-isssue.png)
+  * ![Edit Issue](doc/edit-issue.png)
 * See your scenario inside your issue
 * ![View Scenario](doc/view-scenario.png)
 
