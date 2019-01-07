@@ -1,5 +1,7 @@
 # Scenarios for JIRA Cloud
 
+*Note*: This is no longer supported due to changes in atlassians policies. We are unable to run the addon for you, but you may use our source code freely
+
 Extends Atlassian JIRA Cloud by including gherkin scenarios
 from a github or bitbucket repository into the issue view.
 
